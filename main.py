@@ -87,10 +87,10 @@ async def note(ctx: nextcord.Interaction, id: str):
 
 
 @bot.slash_command(
-    name="tickets",
+    name="many",
     description="Returns many tickets limited by limit, default = 5",
 )
-async def tickets(ctx: nextcord.Interaction):
+async def many_tickets(ctx: nextcord.Interaction):
     """Returns many tickets limited by limit, default = 5
 
     Args:
@@ -100,8 +100,8 @@ async def tickets(ctx: nextcord.Interaction):
     await ctx.response.send_modal(modal)
 
 
-@bot.slash_command(name="ticket", description="retrieves a ticket by id")
-async def ticket(ctx: nextcord.Interaction, id: str):
+@bot.slash_command(name="one", description="retrieves a ticket by id")
+async def one_ticket(ctx: nextcord.Interaction, id: str):
     """queries tickets database by id and returns a ticket
 
     Args:
