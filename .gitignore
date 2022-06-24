@@ -1,0 +1,13 @@
+# misc
+/**/*.env
+
+# windows
+/Lib
+/Scripts
+# linux
+/lib
+/bin
+
+# caches
+/**/__pycache__
+/**/*.cfg
