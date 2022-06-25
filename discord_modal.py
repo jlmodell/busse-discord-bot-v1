@@ -16,10 +16,11 @@ class ManyTickets(nextcord.ui.Modal):
             placeholder="Limit number of records you want to retrieve. (default is 5)",
             default_value="5",
             required=True,
+            row=1,
         )
         self.add_item(self.limit)
 
-        self.type = nextcord.ui.Select()
+        self.type = nextcord.ui.Select(row=2)
         self.add_item(self.type)
         self.type.add_option(label="IT", value="it", default=True)
         self.type.add_option(label="Maintenance", value="maintenance", default=False)
@@ -68,6 +69,7 @@ class SingleTicket(nextcord.ui.Modal):
             placeholder="ID for ticket you want to retrieve",
             default_value=id,
             required=True,
+            row=1,
         )
         self.add_item(self.id)
 
@@ -105,6 +107,7 @@ class Note(nextcord.ui.Modal):
             "Ticket ID",
             default_value=str(id),
             required=True,
+            row=1,
         )
         self.add_item(self.id)
 
@@ -115,18 +118,9 @@ class Note(nextcord.ui.Modal):
             placeholder="Add note to ticket...",
             required=False,
             max_length=2000,
+            row=2,
         )
         self.add_item(self.note)
-
-        # self.overwrite = nextcord.ui.Select()
-        # self.add_item(self.overwrite)
-
-        # self.overwrite.add_option(
-        #     label="Don't Overwrite Existing Note(s)", value=0, default=True
-        # )
-        # self.overwrite.add_option(
-        #     label="Overwrite Existing Note(s)", value=1, default=False
-        # )
 
     async def callback(self, interaction: nextcord.Interaction) -> None:
         if self.note.value and self.id.value:
