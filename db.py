@@ -67,32 +67,45 @@ def format_ticket(idx: int, ticket: dict) -> Tuple[str, Embed]:
 
     obj = {
         "id": str(ticket["_id"]),
-        "created_at": f"{ca:%m/%d/%y %H:%M:%S}",
-        "updated_at": f"{up:%m/%d/%y %H:%M:%S}",
+        "dates": "created at: "
+        + f"{ca:%m/%d/%y %H:%M:%S}"
+        + "\t"
+        + "updated at: "
+        + f"{up:%m/%d/%y %H:%M:%S}",
+        # "updated_at": f"{up:%m/%d/%y %H:%M:%S}",
         "submitted_by": ticket["submittedBy"],
-        "files": "\n".join(ticket.get("files", []))
-        if len(ticket.get("files", [])) > 0
-        else "No files",
         "description": ticket["description"],
         "notes": ticket["notes"],
     }
 
-    r = "**{0}. -> Start**\n".format(idx + 1)
+    try:
+        if ticket.get("files", None) is not None:
+            files = ", ".join([x.get("filename") for x in ticket.get("files")])
+            obj["files"] = files
+        else:
+            obj["files"] = "No files"
+
+    except:
+        obj["files"] = "No files"
+
+    r = ""
 
     for k, v in obj.items():
         if k in ["description", "notes"]:
             _v = v.split("\n")
-            r += "{0: <25}\n".format("__" + k + "__:")
+            r += "__{0}__:\n".format(k.capitalize())
+            r += "```\n"
             for val in _v:
-                r += "{0: <30}{1}\n".format("", val)
+                r += "{0}\n".format(val)
+            r += "```\n"
 
         elif k == "id":
-            r += "{0: <25}{1}\n".format("__" + k + "__:", "||" + v + "||")
+            r += "__{0}__:```{1}```\n".format(
+                "**" + str(idx + 1) + "**. " + k.capitalize(), v
+            )
 
         else:
-            r += "{0: <25}{1}\n".format("__" + k + "__:", v)
-
-    r += "**{0}. -> End**\n\n".format(idx + 1)
+            r += "__{0}__:```{1}```\n".format(k.capitalize(), v if v else "None")
 
     return r, html_hyperlink
 
