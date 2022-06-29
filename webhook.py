@@ -1,6 +1,7 @@
 import httpx
+from constants import DISCORD_WEBHOOK_URL
 
-new_tix_notifier_wh = "https://discord.com/api/webhooks/991543917910704189/7cHETlkf4_bYufx9KsUmhIiXi9k4yOCwATJpPkOVHLf6KtkVyVNbp6eelU86djx_-poO"
+new_tix_notifier_wh = DISCORD_WEBHOOK_URL
 
 
 def send_message(message: str) -> None:
